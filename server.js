@@ -33,7 +33,9 @@ app.post('/api/chat', async (req, res) => {
     res.status(500).json({ reply: 'Hubo un problema al generar la respuesta.' });
   }
 });
-
+app.get('/', (req, res) => {
+  res.send('🚀 Backend activo y escuchando.');
+});
 // Puerto
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
