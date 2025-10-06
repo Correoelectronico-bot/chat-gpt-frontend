@@ -1,12 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
-"type": "module"
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba
 app.get('/', (req, res) => {
   res.send('🚀 Backend activo y escuchando.');
 });
@@ -20,7 +19,7 @@ app.post('/api/chat', async (req, res) => {
 
   try {
     const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
-      model: 'llama3-8b-8192',
+      model: 'llama-3.1-8b-instant',
       messages: [{ role: 'user', content: userMessage }]
     }, {
       headers: {
