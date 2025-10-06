@@ -3,53 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat con GPT</title>
+  <title>Chatbot GPT</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-      text-align: center;
-    }
-    #chat-box {
-      width: 100%;
-      max-width: 600px;
-      height: 400px;
-      margin: 0 auto 20px;
-      padding: 10px;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow-y: auto;
-      text-align: left;
-    }
-    #user-input {
-      width: 80%;
-      max-width: 500px;
-      padding: 10px;
-      font-size: 16px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-left: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+    #chatbox { border: 1px solid #ccc; background: #fff; padding: 10px; height: 400px; overflow-y: auto; margin-bottom: 10px; }
+    .message { margin: 5px 0; padding: 5px; border-radius: 5px; }
+    .user { text-align: right; background: #d0e6ff; }
+    .bot { text-align: left; background: #e2ffe2; }
+    #userInput { width: 80%; padding: 10px; }
+    #sendBtn { padding: 10px; }
   </style>
 </head>
 <body>
-  <h1>🤖 Chat con GPT</h1>
-  <div id="chat-box"></div>
-  <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
-  <button onclick="sendMessage()">Enviar</button>
+  <h2>Chatbot GPT</h2>
+  <div id="chatbox"></div>
+  <input type="text" id="userInput" placeholder="Escribe tu mensaje..." />
+  <button id="sendBtn">Enviar</button>
 
-  <script src="script.js"></script>
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      msg.textContent = text;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'user');
+      userInput.value = '';
+
+      fetch('https://chat-gpt-frontend-ga2r.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      })
+      .then(res => res.json())
+      .then(data => {
+        appendMessage(data.reply || 'Sin respuesta del servidor', 'bot');
+      })
+      .catch(err => {
+        appendMessage('Error al conectar con el servidor', 'bot');
+        console.error(err);
+      });
+    });
+  </script>
 </body>
 </html>
