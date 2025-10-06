@@ -13,8 +13,11 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // asegúrate de tener esta variable en tu entorno
 });
 
+
+
+
 // Endpoint del chatbot
-app.post('/api/chat', async (req, res) => {
+app.post('https://chat-gpt-frontend-ga2r.onrender.com/api/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   if (!userMessage) {
