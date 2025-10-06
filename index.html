@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="script.js"></script>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Chatbot</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>¡Hola, soy tu chatbot!</h1>
+  <div class="container">
+    <h1>Bienvenido a Mi Chatbot</h1>
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
+    <button onclick="enviarMensaje()">Enviar</button>
+    <div id="chatBox"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
