@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const { OpenAI } = require('openai');
@@ -8,13 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Configura tu API key de OpenAI
+// Configura OpenAI
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // asegúrate de tener esta variable en tu entorno
+  apiKey: process.env.OPENAI_API_KEY,
 });
-
-
-
 
 // Endpoint del chatbot
 app.post('/api/chat', async (req, res) => {
@@ -35,9 +31,6 @@ app.post('/api/chat', async (req, res) => {
   } catch (error) {
     console.error('Error al conectar con OpenAI:', error);
     res.status(500).json({ reply: 'Hubo un problema al generar la respuesta.' });
-  }
-});
-
   }
 });
 
