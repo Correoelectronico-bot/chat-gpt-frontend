@@ -1,20 +1,23 @@
-function enviarMensaje() {
-  const input = document.getElementById("userInput");
-  const chatBox = document.getElementById("chatBox");
+async function sendMessage() {
+  const input = document.getElementById("user-input");
+  const chatBox = document.getElementById("chat-box");
+  const message = input.value.trim();
+  if (!message) return;
 
-  const mensaje = input.value.trim();
-  if (mensaje === "") return;
+  const userMsg = document.createElement("p");
+  userMsg.textContent = `🧑 Tú: ${message}`;
+  chatBox.appendChild(userMsg);
 
-  const respuesta = `🤖 Bot: Has dicho "${mensaje}"`;
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message })
+  });
 
-  const mensajeUsuario = document.createElement("p");
-  mensajeUsuario.textContent = `🧑 Tú: ${mensaje}`;
-
-  const mensajeBot = document.createElement("p");
-  mensajeBot.textContent = respuesta;
-
-  chatBox.appendChild(mensajeUsuario);
-  chatBox.appendChild(mensajeBot);
+  const data = await response.json();
+  const botMsg = document.createElement("p");
+  botMsg.textContent = `🤖 Bot: ${data.reply}`;
+  chatBox.appendChild(botMsg);
 
   input.value = "";
 }
