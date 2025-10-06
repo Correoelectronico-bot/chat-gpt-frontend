@@ -1,0 +1,6 @@
+"dependencies": {
+  "express": "^4.18.2",
+  "openai": "^4.0.0",
+  "dotenv": "^16.3.1",
+  "body-parser": "^1.20.2"
+}
