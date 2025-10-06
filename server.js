@@ -1,8 +1,3 @@
-headers: {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
-}
-
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
