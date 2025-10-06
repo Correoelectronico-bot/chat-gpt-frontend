@@ -1,3 +1,7 @@
+headers: {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+}
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
