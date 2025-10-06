@@ -27,6 +27,9 @@ app.post('/api/chat', async (req, res) => {
     res.status(500).json({ error: 'Error al conectar con OpenAI' });
   }
 });
+app.post('/api/chat', async (req, res) => {
+  // ... conexión con OpenAI ...
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
