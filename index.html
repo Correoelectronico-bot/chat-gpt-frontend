@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Chatbot</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat con GPT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+    }
+    #chat-box {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto 20px;
+      padding: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    #user-input {
+      width: 80%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenido a Mi Chatbot</h1>
-    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
-    <button onclick="enviarMensaje()">Enviar</button>
-    <div id="chatBox"></div>
-  </div>
+  <h1>🤖 Chat con GPT</h1>
+  <div id="chat-box"></div>
+  <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
+  <button onclick="sendMessage()">Enviar</button>
 
   <script src="script.js"></script>
 </body>
