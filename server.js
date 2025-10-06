@@ -1,33 +1,34 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
-const app = express();
+const axios = require('axios');
+require('dotenv').config();
 
-// Middleware
+const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Endpoint del chatbot
-app.post('/api/chat', (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
 
-  // Aquí puedes conectar con una API real como OpenAI si lo deseas.
-  // Por ahora, responderemos con lógica básica:
-  let reply = '';
-
   if (!userMessage) {
-    reply = 'No he recibido ningún mensaje.';
-  } else if (userMessage.toLowerCase().includes('capital de francia')) {
-    reply = 'La capital de Francia es París.';
-  } else {
-    reply = `Recibí tu mensaje: "${userMessage}". ¿Puedes ser más específico?`;
+    return res.status(400).json({ reply: 'No he recibido ningún mensaje.' });
   }
 
-  res.json({ reply });
+  try {
+    const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
+      model: 'llama3-8b-8192', // También puedes usar llama3-70b-8192
+      messages: [{ role: 'user', content: userMessage }]
+    });
+
+    const reply = response.data.choices[0].message.content;
+    res.json({ reply });
+  } catch (error) {
+    console.error('Error al conectar con Groq:', error.response?.data || error.message);
+    res.status(500).json({ reply: 'Hubo un problema al generar la respuesta con Groq.' });
+  }
 });
 
-// Puerto
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
