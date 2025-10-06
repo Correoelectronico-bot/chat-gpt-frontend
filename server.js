@@ -17,7 +17,7 @@ const openai = new OpenAI({
 
 
 // Endpoint del chatbot
-app.post('https://chat-gpt-frontend-ga2r.onrender.com/api/chat', async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   if (!userMessage) {
@@ -35,6 +35,9 @@ app.post('https://chat-gpt-frontend-ga2r.onrender.com/api/chat', async (req, res
   } catch (error) {
     console.error('Error al conectar con OpenAI:', error);
     res.status(500).json({ reply: 'Hubo un problema al generar la respuesta.' });
+  }
+});
+
   }
 });
 
