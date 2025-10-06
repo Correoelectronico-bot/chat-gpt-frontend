@@ -3,7 +3,6 @@ headers: {
   'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
 }
 
-
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
@@ -50,4 +49,3 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
-
