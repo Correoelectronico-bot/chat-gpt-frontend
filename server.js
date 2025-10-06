@@ -1,8 +1,3 @@
-headers: {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
-}
-
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
@@ -23,15 +18,19 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
-    const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
-      model: 'llama-3.1-8b-instant',
-      messages: [{ role: 'user', content: userMessage }]
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+    const response = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model: 'llama-3.1-8b-instant',
+        messages: [{ role: 'user', content: userMessage }]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+        }
       }
-    });
+    );
 
     const reply = response.data.choices[0].message.content;
     res.json({ reply });
@@ -45,4 +44,4 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
-  
+
