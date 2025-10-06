@@ -1,34 +1,33 @@
-const OpenAI = require('openai');
-require('dotenv').config();
+// server.js
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-
+const cors = require('cors');
 const app = express();
-app.use(bodyParser.json());
-app.use(express.static(__dirname));
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-app.post('/api/chat', async (req, res) => {
+// Endpoint del chatbot
+app.post('/api/chat', (req, res) => {
   const userMessage = req.body.message;
 
-  try {
-    const chatCompletion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: userMessage }]
-    });
+  // Aquí puedes conectar con una API real como OpenAI si lo deseas.
+  // Por ahora, responderemos con lógica básica:
+  let reply = '';
 
-    res.json({ reply: chatCompletion.choices[0].message.content });
-  } catch (error) {
-    console.error('Error al conectar con OpenAI:', error);
-    res.status(500).json({ error: 'Error al conectar con OpenAI' });
+  if (!userMessage) {
+    reply = 'No he recibido ningún mensaje.';
+  } else if (userMessage.toLowerCase().includes('capital de francia')) {
+    reply = 'La capital de Francia es París.';
+  } else {
+    reply = `Recibí tu mensaje: "${userMessage}". ¿Puedes ser más específico?`;
   }
+
+  res.json({ reply });
 });
 
+// Puerto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
