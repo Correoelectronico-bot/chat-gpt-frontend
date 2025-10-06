@@ -1,19 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Chatbot</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat con IA</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    #chat { border: 1px solid #ccc; padding: 10px; background: #fff; height: 300px; overflow-y: auto; }
+    input, button { padding: 10px; margin-top: 10px; width: 100%; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenido a Mi Chatbot</h1>
-    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
-    <button onclick="enviarMensaje()">Enviar</button>
-    <div id="chatBox"></div>
-  </div>
+  <h1>🤖 Chat con IA (Groq)</h1>
+  <div id="chat"></div>
+  <input type="text" id="input" placeholder="Escribe tu mensaje..." />
+  <button onclick="enviarMensaje()">Enviar</button>
 
-  <script src="script.js"></script>
+  <script>
+    async function enviarMensaje() {
+      const texto = document.getElementById('input').value;
+      if (!texto) return;
+
+      document.getElementById('chat').innerHTML += `<p><strong>Tú:</strong> ${texto}</p>`;
+      document.getElementById('input').value = '';
+
+      try {
+        const respuesta = await fetch('https://chat-gpt-frontend-ga2r.onrender.com/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: texto })
+        });
+
+        const datos = await respuesta.json();
+        document.getElementById('chat').innerHTML += `<p><strong>IA:</strong> ${datos.reply}</p>`;
+      } catch (error) {
+        document.getElementById('chat').innerHTML += `<p><strong>Error:</strong> No se pudo conectar al servidor.</p>`;
+      }
+    }
+  </script>
 </body>
 </html>
