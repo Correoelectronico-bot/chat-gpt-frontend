@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
-
+"type": "module"
 const app = express();
 app.use(cors());
 app.use(express.json());
